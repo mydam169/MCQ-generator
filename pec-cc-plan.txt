@@ -1,0 +1,30 @@
+Types of exercises
+1. Offre, demand, equilibre
+2. Changement d'equilibre a la suite d'un changement de l'offre ou de la demande
+3. Reglementation des prix :
+    - Prix plafond
+    - Prix plancher
+    i. Nouvelle quantite
+    ii. Perte seche 
+    iii. Surplus du conso
+    iv. Surplus du prod
+4. Donner un schema, demander d'indiquer :
+    - prix d'equilibre
+    - qte d'equilibre
+    - SC 
+    - SP 
+    - PS 
+    lorsque le marche est en CPP, en Monopole
+5. Calcul des elasticites prix 
+6. Soit la taille de la taxe, la demande et l'offre sur le marche. Calculer
+    - La nouvelle quantite
+    - La recette fiscale
+    - La perte seche 
+    - L'incidence fiscale : le poids de l'impot supporte par les prods/cons 
+7. Soit un monopole avec une fonction de cout. Soit la demande sur le marche. Calculer:
+    - prix en monopole
+    - qte en monopole
+    - qte efficace
+    - surplus du conso
+    - profit du mono 
+8. Theorie des jeux

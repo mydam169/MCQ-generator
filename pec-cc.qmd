@@ -1,0 +1,366 @@
+---
+title: "Contrôle de Problèmes Economqiues Contemporains"
+subtitle: "Année universitaire : 2024-2025"
+author: "Cours de My Dam"
+number-sections: true 
+number-depth: 2
+execute: 
+    echo: false 
+    warning: false
+format:
+    pdf:
+        documentclass: scrartcl
+        geometry:
+            - top=25mm
+            - bottom=25mm
+            - left=25mm
+            - right=25mm
+        engine: xelatex
+        mainfont: Times New Roman
+        mathfont: Times New Roman
+        monofont: Times New Roman
+        sansfont: Times New Roman
+
+    # html:
+    #     embed-resources: true 
+    # docx:
+    #     toc: false
+    #     number-sections: true 
+    #     embed-resources: true
+    #     # reference-doc: template.docx
+    #     reference-doc: custom-reference-doc.docx
+---
+
+```{python}
+import numpy as np 
+import pandas as pd 
+import matplotlib.pyplot as plt 
+from IPython.display import display, Math 
+import random
+import pecModules as mods
+import sys
+# %load_ext autoreload
+# %autoreload 2
+```
+
+```{python}
+with open('sujet_numbers.txt', 'r') as f:
+    lines = f.readlines() # read into a list
+    if lines:
+        sujet_number = int(lines[-1].strip())
+    else:
+        print("The file is empty")
+print(f'Sujet: {sujet_number}')
+random.seed(sujet_number)
+```
+
+**CONSIGNE** : Il n'y a qu'une seule réponse correcte à chaque question. Chaque réponse correcte vaut exactement 1 point. Choisir aucune réponse ou plusieurs réponses résulte en 0 point. Veuillez entourer la réponse pour indiquer votre choix.
+
+---------------------------------------------------------------------------
+
+**Nom** :
+
+**Prénom** :
+
+**Numéro étudiant** :
+
+**Courriel universitaire** :
+
+---------------------------------------------------------------------------
+
+
+# Offre et demande
+
+```{python}
+#| results: asis
+demand_intercepts = np.arange(50., 200., 10.)
+demand_slopes = np.arange(1.25, 15., 1.)
+supply_slopes = np.arange(1.15, 20., 2.)
+supply_intercepts = np.arange(0.5, 20., 1.)
+# randomize parameters
+a = round(random.choice(demand_intercepts))
+b = random.choice(demand_slopes).round(2)
+c = random.choice(supply_intercepts).round(2)
+d = random.choice(supply_slopes).round(2)
+```
+
+Supposons que la demande et l'offre inverses sur un marché soient :
+
+```{python}
+#| results: asis
+display(Math(f'P(Q) = {a} - {b}Q'))
+display(Math(f'P(Q) = {c} + {d}Q'))
+```
+
+
+```{python}
+dsModel = mods.LinearDSModel(a, -b, c, d)
+```
+
+## La quantité d'équilibre est:
+
+```{python}
+#| results: asis
+qstar = dsModel.q_star.round(2)
+mods.shuffleAnswer(qstar)
+```
+
+
+```{python}
+# print(f'La bonne réponse : {qstar}')
+```
+
+## Le prix d'équilibre est:
+
+```{python}
+#| results: asis
+pstar = dsModel.p_star.round(2)
+mods.shuffleAnswer(pstar)
+```
+
+```{python}
+# print(f'La bonne réponse : {pstar}')
+```
+
+## Le surplus du consommateur est:
+
+```{python}
+#| results: asis
+scstar = dsModel.get_CS(qstar, pstar).round(2)
+mods.shuffleAnswer(scstar)
+```
+
+```{python}
+# print(f'La bonne réponse : {scstar}')
+```
+
+## Le surplus du producteur est:
+
+```{python}
+#| results: asis
+spstar = dsModel.get_PS(qstar, pstar).round(2)
+mods.shuffleAnswer(spstar)
+```
+
+```{python}
+# print(f'La bonne réponse : {spstar}')
+```
+
+# Les impôts et les élasticités-prix
+
+Considérons le marché concurrentiel dont l'offre et la demande soient :
+
+```{python}
+#| results: asis
+display(Math(f'P(Q) = {a} - {b}Q'))
+display(Math(f'P(Q) = {c} + {d}Q'))
+```
+
+
+Supposons que l'Etat applique une taxe aux acheteurs égale au 20 pour cent du prix d'équilibre actuel.
+
+
+```{python}
+tax = 0.2*pstar
+dsTax = mods.TaxModel(a, -b, c, d, tax_size=tax)
+qT = dsTax.q_T.round(2)
+pT = dsTax.P_s.round(2)
+pA = dsTax.P_d.round(2)
+pV = dsTax.P_s.round(2)
+DWL = dsTax.DWL_T.round(2)
+```
+
+## Le nouveau prix d'équilibre est:
+
+```{python}
+mods.shuffleAnswer(pT)
+# print(f'La bonne réponse : {pT}')
+```
+
+## La nouvelle taille du marché est:
+
+```{python}
+mods.shuffleAnswer(qT)
+# print(f'La bonne réponse : {qT}')
+```
+
+## La perte sèche à cause de la taxe est:
+
+```{python}
+mods.shuffleAnswer(DWL)
+# print(f'La bonne réponse : {DWL}')
+```
+
+## Lorsque le prix augmente d'un pour cent par rapport au prix d'équilibre, la quantité offerte augmente de combien de pour cent?
+
+```{python}
+eps = np.abs(mods.computeElasticity(pT, pstar, qT, qstar).round(2))
+mods.shuffleAnswer(eps)
+# print(f'La bonne réponse : {eps}')
+```
+
+<!-- ## Le poids de l'impôt supporté par les acheteurs est:
+
+```{python}
+poids_conso = ((pA - pstar) / tax).round(2)
+mods.shuffleAnswer(poids_conso)
+# print(f'La bonne réponse : {poids_conso}')
+```
+
+## Si le destinataire de la taxe était le vendeur, le poids de l'impôt supporté par les acheteurs serait:
+
+```{python}
+poids_conso = ((pA - pstar) / tax).round(2)
+mods.shuffleAnswer(poids_conso)
+# print(f'La bonne réponse : {poids_conso}')
+``` 
+-->
+
+
+# Réglementation des prix
+
+Considérons le marché concurrentiel dont l'offre et la demande soient :
+
+```{python}
+#| results: asis
+display(Math(f'P(Q) = {a} - {b}Q'))
+display(Math(f'P(Q) = {c} + {d}Q'))
+```
+
+Supposons que le marché soit actuellement en équilibre. L'Etat souhaite réduire la taille du marché de 30 pour cent et considère deux politiques : un prix plafond et un prix plancher.
+
+## À quel niveau faut-il fixer le prix plafond pour atteindre cet objectif?
+
+```{python}
+q_nouvelle = 0.7 * qstar
+prix_plafond = (c + d * q_nouvelle).round(2)
+mods.shuffleAnswer(prix_plafond)
+# print(f'La bonne réponse : {prix_plafond}')
+```
+
+## Quel est le surplus du consommater avec le prix plafond?
+
+```{python}
+sc = mods.computeCS(a, b, prix_plafond, q_nouvelle)
+mods.shuffleAnswer(sc)
+# print(f'La bonne réponse : {sc}')
+```
+
+## Quel est le surplus du producteur avec le prix plafond?
+
+```{python}
+sp = mods.computePS(c, d, prix_plafond, q_nouvelle)
+mods.shuffleAnswer(sp)
+# print(f'La bonne réponse : {sp}')
+```
+
+## À quel niveau faut-il fixer le prix plancher pour atteindre cet objectif?
+
+```{python}
+q_nouvelle = 0.7 * qstar
+prix_plancher = (a - b * q_nouvelle).round(2)
+mods.shuffleAnswer(prix_plancher)
+# print(f'La bonne réponse : {prix_plancher}')
+```
+
+## Quel est le surplus du consommateur avec le prix plancher?
+
+```{python}
+sc = mods.computeCS(a, b, prix_plancher, q_nouvelle)
+mods.shuffleAnswer(sc)
+# print(f'La bonne réponse : {sc}')
+```
+
+## Quel est le surplus du producteur avec le prix plancher?
+
+```{python}
+sp = mods.computePS(c, d, prix_plancher, q_nouvelle)
+mods.shuffleAnswer(sp)
+# print(f'La bonne réponse : {sp}')
+```
+
+# Le monopole
+
+```{python}
+demand_intercepts = np.arange(250., 500., 10.)
+demand_slopes = np.arange(1.25, 15., 1.)
+marginal_costs = np.arange(10., 200., 20.)
+# randomize parameters
+a = round(random.choice(demand_intercepts))
+b = random.choice(demand_slopes).round(2)
+c = round(random.choice(marginal_costs))
+max_fixed_costs = (a - c)**2 / (4*b)
+fc = round(random.uniform(0.1, 0.95) * max_fixed_costs)
+modMon = mods.Monopole(a, b, c, fc)
+```
+
+Soit la demande sur un marché en monopole :
+
+```{python}
+display(Math(f"p(q) = {a} - {b}q"))
+```
+
+Supposons que la fonction de coût du monopoleur soit :
+
+```{python}
+display(Math(f"C(q) = {c}q + {fc}"))
+```
+
+## La quantité en monopole est:
+
+```{python}
+qmon = modMon.Q_mon.round(2)
+mods.shuffleAnswer(qmon)
+# print(f'La bonne reponse est {qmon}')
+```
+
+## Le prix en monopole est:
+
+```{python}
+pmon = modMon.P_mon.round(2)
+mods.shuffleAnswer(pmon)
+# print(f'La bonne reponse est {pmon}')
+```
+
+## Le profit de la firme en monopole est:
+
+```{python}
+profitmon = modMon.Profit_mon.round(2)
+mods.shuffleAnswer(profitmon)
+# print(f'La bonne reponse est {profitmon}')
+```
+
+## La quantité efficace est:
+
+```{python}
+qefficace = qmon * 2
+mods.shuffleAnswer(qefficace)
+# print(f"La bonne réponse est {qefficace}")
+```
+
+## La perte sèche à cause du monopole est:
+
+```{python}
+psmon = modMon.PS_mon.round(2)
+mods.shuffleAnswer(psmon)
+# print(f'La bonne réponse est {psmon}')
+```
+
+# Le duopole
+
+Supposons maintenant qu'une firme de toute vue identique au monopoleur en question précédente entre dans le marché. Autrement dit, le marché est devenu un duopole avec deux firmes identiques. 
+
+## Quelle est la quantité produite par chaque firme en duopole ?
+
+```{python}
+qduo = modMon.q_duo.round(2)
+mods.shuffleAnswer(qduo)
+```
+
+## Quel est le prix en duopole ?
+
+
+```{python}
+pduo = modMon.P_duo.round(2)
+mods.shuffleAnswer(pduo)
+```
