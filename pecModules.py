@@ -212,16 +212,16 @@ class PriceCeiling(LinearDSModel):
         return self.TS_star - self.PS_ceiling - self.DWL_ceiling
 
 import pandas as pd
-def shuffleAnswer(correctAnswer: float):
+def shuffleAnswer(correctAnswer: float, rng: np.random.Generator):
     '''
-    This function takes a correct answer, generate four more different answers,
-    shuffle them and create 5 answer options (A) to (E)
+    This function takes a correct answer, generate five wrong answers,
+    shuffle them and create 6 answer options (A) to (F), plus (G) "Autre".
+    All randomness comes from `rng`, so a seeded generator gives reproducible options.
     '''
     multiples = np.arange(0.5, 2.0, 0.15)
-    # wrong_answers = (np.random.uniform(0.7, 2.1, 5) * correctAnswer)
-    wrong_answers = np.random.choice(multiples, size=5, replace=False) * correctAnswer
+    wrong_answers = rng.choice(multiples, size=5, replace=False) * correctAnswer
     all_answers = np.append(wrong_answers, correctAnswer).round(2)
-    np.random.shuffle(all_answers)
+    rng.shuffle(all_answers)
     A, B, C, D, E, F = all_answers
     # choices = f'(A) {A}    (B) {B}    (C) {C}    (D) {D}    (E) {E}    (F) {F}    (G) Autre'
     # print(choices)
@@ -236,8 +236,9 @@ def shuffleAnswer(correctAnswer: float):
     }, index=[''])
     return choices
 
-def printAnswer(correct_answer):
-    print(f'Bonne réponse: {correct_answer}')
+def printAnswer(question):
+    '''Print the answer-key line of a question, e.g. "Bonne réponse : (D) 3.48".'''
+    print(question.answer_text)
 
 def computeElasticity(initP, finalP, initQ, finalQ):
     "Compute price-elasticity of demand or supply using middle point rule"
