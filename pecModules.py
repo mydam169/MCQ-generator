@@ -281,7 +281,6 @@ class Monopole:
             )
         self.fc = fixed_cost
 
-    @property
     def MR(self, quantity):
         return self.demand_int - 2 * self.demand_sl * quantity
     
