@@ -23,13 +23,9 @@ format:
 ---
 
 ```{python}
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 from IPython.display import display, Math
 import pecModules as mods
 from exam import build_exam
-import sys
 ```
 
 ```{python}
@@ -154,7 +150,9 @@ mods.printAnswer(ex['elasticity'])
 ```
 
 
-<!-- ## Le poids de l'impôt supporté par les acheteurs est :
+<!-- Optional tax-incidence questions: remove the comment markers to include them.
+
+## Le poids de l'impôt supporté par les acheteurs est :
 
 ```{python}
 ex['incidence_buyers'].options
@@ -199,7 +197,7 @@ ex['price_ceiling'].options
 mods.printAnswer(ex['price_ceiling'])
 ```
 
-## Quel est le surplus du consommater avec le prix plafond ?
+## Quel est le surplus du consommateur avec le prix plafond ?
 
 ```{python}
 ex['cs_ceiling'].options
