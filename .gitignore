@@ -6,3 +6,5 @@ __pycache__/
 data/__pycache__/
 
 
+.pytest_cache/
+generated_files/
