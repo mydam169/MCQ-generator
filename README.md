@@ -4,9 +4,9 @@ A randomized multiple-choice exam generator for undergraduate economics: every v
 
 ![Student copy (left) and answer key (right) for version 1](docs/exam-and-answer-key.png)
 
-## Why
+## Purpose
 
-Each student receives a distinct version of the exam, which deters copying. All versions test the same skills with different parameters. For every version the tool also produces an answer key that lists the same options in the same order and gives the correct letter and value, so grading is mechanical. The tool was used to produce real exams for a large undergraduate course, *Problèmes Économiques Contemporains*.
+Each student receives a distinct version of the exam, which deters copying. All versions test the same skills with different parameters. For every version the tool also produces an answer key that lists the same options in the same order and gives the correct letter and value, so grading is mechanical. The tool was used to produce real exams for a large undergraduate course, *Problèmes Économiques Contemporains* (Contemporary Economic Issues).
 
 ## Question types
 
