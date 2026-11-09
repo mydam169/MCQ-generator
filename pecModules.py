@@ -272,11 +272,14 @@ class Monopole:
         self.demand_int = demand_int
         self.demand_sl = demand_slope
         self.mc = marginal_cost
-        profit_net_fc = (demand_int - marginal_cost) / (4 * demand_slope)
-        if fixed_cost <= profit_net_fc:
-            self.fc = 0.4 * profit_net_fc
-        else:
-            self.fc = fixed_cost
+        # Maximum profit before fixed costs: (a - c)^2 / (4b).
+        max_profit = (demand_int - marginal_cost) ** 2 / (4 * demand_slope)
+        if fixed_cost > max_profit:
+            raise ValueError(
+                f"Fixed cost {fixed_cost} exceeds the maximum operating profit "
+                f"{max_profit:.2f}; profit after fixed costs would be negative"
+            )
+        self.fc = fixed_cost
 
     @property
     def MR(self, quantity):
