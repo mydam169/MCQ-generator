@@ -1,0 +1,15 @@
+# Python dependencies (tested with Python 3.11).
+# Install them into the Python environment that Quarto uses for Jupyter
+# (check with `quarto check jupyter`).
+#
+# External requirements, not installable with pip:
+#   - Quarto >= 1.4            https://quarto.org/docs/get-started/
+#   - A LaTeX distribution with XeLaTeX, e.g. `quarto install tinytex`
+#   - The Times New Roman font (used by both templates)
+
+numpy>=1.24
+pandas>=2.0
+ipython>=8.0
+jupyter          # Quarto's Jupyter engine (nbformat, nbclient, ipykernel)
+papermill>=2.4   # required by `quarto render -P` (Quarto parameters)
+pytest>=7.0      # unit tests
