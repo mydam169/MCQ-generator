@@ -33,12 +33,13 @@ import sys
 ```
 
 ```{python}
-with open('sujet_numbers.txt', 'r') as f:
-    lines = f.readlines() # read into a list
-    if lines:
-        sujet_number = int(lines[-1].strip())
-    else:
-        print("The file is empty")
+#| tags: [parameters]
+# Version number; override with `quarto render pec-cc-answers.qmd -P sujet:3`.
+sujet = 1
+```
+
+```{python}
+sujet_number = int(sujet)
 print(f"Sujet: {sujet_number}.")
 # Same call as in the student copy, so options and their order are identical.
 ex = build_exam(sujet_number)

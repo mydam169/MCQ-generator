@@ -7,19 +7,17 @@ def render_qmd_files(sujet_file, corrige_file, n_copies, first_copy=1):
     os.makedirs(output_dir, exist_ok=True)
 
     for count in range(first_copy, first_copy + n_copies):
-        # write current count to  txt file
-        with open('sujet_numbers.txt', 'w') as f:
-            f.write(f'{count}\n')
         sujet_name = f'pec-cc-sujet-{count}.pdf'
         corrige_name = f'pec-cc-corr-{count}.pdf'
         try:
+            # The version number is passed to the templates as a Quarto parameter.
             run([
-                'quarto', 'render', sujet_file, '--to', 
-                'pdf', '--output', sujet_name
+                'quarto', 'render', sujet_file, '--to',
+                'pdf', '--output', sujet_name, '-P', f'sujet:{count}', '--no-execute-daemon'
             ], check=True)
             run([
-                'quarto', 'render', corrige_file, '--to', 
-                'pdf', '--output', corrige_name
+                'quarto', 'render', corrige_file, '--to',
+                'pdf', '--output', corrige_name, '-P', f'sujet:{count}', '--no-execute-daemon'
             ], check=True)
 
             # move generated files to dedicated folder
@@ -31,4 +29,3 @@ def render_qmd_files(sujet_file, corrige_file, n_copies, first_copy=1):
 
 if __name__ == "__main__":
     render_qmd_files()
-
